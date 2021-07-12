@@ -80,6 +80,7 @@ module Rouge
         token :Whitespace, 'w'
       end
 
+      token :Mark, 'mark'
       token :Escape, 'esc'
       token :Error,  'err'
       token :Other,  'x'

@@ -122,10 +122,22 @@ module Rouge
       def process_line(input, &output)
         input.scan(line_regex)
 
+        if input[0] =~ /\A\s*<mark>[\s\S]*<\/mark>/
+          puts "console: matched snip #{input[0].inspect}" if @debug
+          output_lexer.reset!
+          lang_lexer.reset!
+
+          marked = $&
+          after = $'
+
+          # Rails.logger.error marked.sub(/<mark>/, '').sub(/<\/mark>/,'')
+          yield Mark, marked.sub(/<mark>/, '').sub(/<\/mark>/,'')
+
+          lang_lexer.continue_lex(after, &output)
         # As a nicety, support the use of elisions in input text. A user can
         # write a line with only `<...>` or one or more `.` characters and
         # Rouge will treat it as a comment.
-        if input[0] =~ /\A\s*(?:<[.]+>|[.]+)\s*\z/
+        elsif input[0] =~ /\A\s*(?:<[.]+>|[.]+)\s*\z/
           puts "console: matched snip #{input[0].inspect}" if @debug
           output_lexer.reset!
           lang_lexer.reset!

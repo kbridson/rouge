@@ -165,6 +165,7 @@ module Rouge
 
       state :root do
         mixin :whitespace
+        rule /<mark>[ \S]*<\/mark>/, Mark
         rule %r/__END__/, Comment::Preproc, :end_part
 
         rule %r/0_?[0-7]+(?:_[0-7]+)*/, Num::Oct

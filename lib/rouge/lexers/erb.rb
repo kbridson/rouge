@@ -26,14 +26,24 @@ module Rouge
       open  = /<%%|<%=|<%#|<%-|<%/
       close = /%%>|-%>|%>/
 
+      open_mark = /<mark>/
+      close_mark = /<\/mark>/
+
       state :root do
+        rule open_mark, Mark, :marked
+        
         rule %r/<%#/, Comment, :comment
 
         rule open, Comment::Preproc, :ruby
 
-        rule %r/.+?(?=#{open})|.+/m do
+        rule %r/^(?!#{open_mark}).+?(?=#{open})|.+/m do
           delegate parent
         end
+      end
+
+      state :marked do
+        rule close_mark, Mark, :pop!
+        rule %r/.+?(?=#{close_mark})|.+/m, Mark
       end
 
       state :comment do

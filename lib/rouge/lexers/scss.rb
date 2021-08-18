@@ -13,6 +13,7 @@ module Rouge
       mimetypes 'text/x-scss'
 
       state :root do
+        rule /<mark>[ \S]*<\/mark>/, Mark
         rule %r/\s+/, Text
         rule %r(//.*?$), Comment::Single
         rule %r(/[*].*?[*]/)m, Comment::Multiline

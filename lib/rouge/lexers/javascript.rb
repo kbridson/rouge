@@ -146,6 +146,7 @@ module Rouge
       id = self.id_regex
 
       state :root do
+        rule /<mark>[ \S]*<\/mark>/, Mark
         rule %r/\A\s*#!.*?\n/m, Comment::Preproc, :statement
         rule %r((?<=\n)(?=\s|/|<!--)), Text, :expr_start
         mixin :comments_and_whitespace

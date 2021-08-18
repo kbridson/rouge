@@ -55,7 +55,7 @@ module Rouge
         rule %r/[.](?=\s)/, Name::Builtin
 
         rule %r/(\b\w+)(=)/ do
-          groups Name::Variable, Operator
+          groups Name, Operator
         end
 
         rule %r/[\[\]{}()!=>]/, Operator

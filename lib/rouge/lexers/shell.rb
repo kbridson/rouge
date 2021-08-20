@@ -193,6 +193,7 @@ module Rouge
       end
 
       state :root do
+        rule /<mark>[ \S]*<\/mark>/, Mark
         mixin :basic
         mixin :data
       end
